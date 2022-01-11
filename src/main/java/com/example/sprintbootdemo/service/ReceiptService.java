@@ -27,9 +27,16 @@ public class ReceiptService {
         return receiptRepository.findAll();
     }
 
-    public Receipt getReceiptById(Long receiptId) {
+    public Receipt getReceipt(Long receiptId) {
         return receiptRepository.findById(receiptId).orElseThrow(
                 () -> new ResourceNotFoundException("Receipt with id: " + receiptId + " does not exist")
         );
+    }
+
+    public ReceiptProduct addNewReceiptProduct(Long receiptId, Long productId, ReceiptProduct receiptProduct) {
+        Receipt receipt = getReceipt(receiptId);
+        receiptProduct.setReceipt(receipt);
+
+        return receiptProductService.saveNewReceiptProduct(productId, receiptProduct);
     }
 }

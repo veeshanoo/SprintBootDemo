@@ -17,7 +17,9 @@ public class ReceiptProductService {
         this.productService = productService;
     }
 
-    public ReceiptProduct saveNewReceiptProduct(ReceiptProduct receiptProduct) {
+    public ReceiptProduct saveNewReceiptProduct(Long productId, ReceiptProduct receiptProduct) {
+        Product product = productService.getProduct(productId);
+        receiptProduct.setProduct(product);
         return receiptProductRepository.save(receiptProduct);
     }
 
