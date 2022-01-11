@@ -1,5 +1,7 @@
 package com.example.sprintbootdemo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,6 +13,7 @@ public class ProductDetails {
     private String description;
 
     @OneToOne(mappedBy = "productDetails")
+    @JsonIgnore
     private Product product;
 
     public ProductDetails() {

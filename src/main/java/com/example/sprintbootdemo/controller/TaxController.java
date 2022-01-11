@@ -3,13 +3,14 @@ package com.example.sprintbootdemo.controller;
 import com.example.sprintbootdemo.model.Tax;
 import com.example.sprintbootdemo.service.TaxService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/tax")
+@Validated
 public class TaxController {
     private final TaxService taxService;
 
@@ -23,7 +24,7 @@ public class TaxController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Tax>> getTax(@PathVariable("id") Long id) {
+    public ResponseEntity<Tax> getTax(@PathVariable("id") Long id) {
         return ResponseEntity.ok().body(taxService.getTax(id));
     }
 

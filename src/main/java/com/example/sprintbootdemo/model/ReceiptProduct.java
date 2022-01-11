@@ -50,4 +50,14 @@ public class ReceiptProduct {
     public void setReceiptProductQuantity(Float receiptProductQuantity) {
         this.receiptProductQuantity = receiptProductQuantity;
     }
+
+    public Float calculateCost() {
+        float cost = this.getReceiptProductQuantity() * this.product.getProductPrice();
+
+        if (this.product.getTax() != null) {
+            cost = cost * this.product.getTax().getTaxPercentage();
+        }
+
+        return cost;
+    }
 }

@@ -9,7 +9,7 @@ public class Receipt {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long receiptId;
 
-    @OneToMany(mappedBy = "receipt")
+    @OneToMany(mappedBy = "receipt", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReceiptProduct> receiptProducts;
 
     @ManyToOne
@@ -29,5 +29,19 @@ public class Receipt {
 
     public void setCashRegister(CashRegister cashRegister) {
         this.cashRegister = cashRegister;
+    }
+
+    public List<ReceiptProduct> getReceiptProducts() {
+        return receiptProducts;
+    }
+
+    public Float calculateReceiptTotal() {
+        Float total = (float) 0;
+
+        for (ReceiptProduct receiptProduct : this.getReceiptProducts()) {
+            total += receiptProduct.calculateCost();
+        }
+
+        return total;
     }
 }

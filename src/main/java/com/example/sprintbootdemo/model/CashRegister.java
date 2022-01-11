@@ -22,4 +22,8 @@ public class CashRegister {
 
     public CashRegister() {
     }
+
+    public List<Receipt> getReceipts() {
+        return receipts;
+    }
 }

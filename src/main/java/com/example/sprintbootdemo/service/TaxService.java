@@ -1,5 +1,6 @@
 package com.example.sprintbootdemo.service;
 
+import com.example.sprintbootdemo.exception.ResourceNotFoundException;
 import com.example.sprintbootdemo.model.Tax;
 import com.example.sprintbootdemo.repository.TaxRepository;
 import org.springframework.stereotype.Service;
@@ -19,12 +20,10 @@ public class TaxService {
         return taxRepository.findAll();
     }
 
-    public Optional<Tax> getTax(Long taxId) {
-        System.out.println("ASDASD " + taxId.toString());
-        Optional<Tax> yes = taxRepository.findById(taxId);
-        System.out.println(yes);
-
-        return yes;
+    public Tax getTax(Long taxId) {
+        return taxRepository.findById(taxId).orElseThrow(
+                () -> new ResourceNotFoundException("Tax with id: " + taxId + " does not exist")
+        );
     }
 
     public Tax saveNewTax(Tax tax) {

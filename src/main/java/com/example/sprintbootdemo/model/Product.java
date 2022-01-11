@@ -1,5 +1,7 @@
 package com.example.sprintbootdemo.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -7,6 +9,7 @@ import java.util.List;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty
     private Long productId;
 
     private String productName;
@@ -16,7 +19,7 @@ public class Product {
     @JoinColumn(name = "tax_id")
     private Tax tax;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_details_id")
     private ProductDetails productDetails;
 
