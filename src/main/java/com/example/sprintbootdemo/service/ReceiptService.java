@@ -39,4 +39,9 @@ public class ReceiptService {
 
         return receiptProductService.saveNewReceiptProduct(productId, receiptProduct);
     }
+
+    public void deleteReceipt(Long receiptId) {
+        Receipt receipt = getReceipt(receiptId);
+        receiptRepository.delete(receipt);
+    }
 }

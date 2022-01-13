@@ -1,12 +1,15 @@
 package com.example.sprintbootdemo.controller;
 
+import com.example.sprintbootdemo.dto.ProductRequestBodyDto;
 import com.example.sprintbootdemo.exception.MissingFieldsException;
+import com.example.sprintbootdemo.mapper.ProductMapper;
 import com.example.sprintbootdemo.model.Product;
 import com.example.sprintbootdemo.service.ProductService;
 import com.example.sprintbootdemo.service.TaxService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -14,10 +17,12 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
     private final TaxService taxService;
+    private final ProductMapper productMapper;
 
-    public ProductController(ProductService productService, TaxService taxService) {
+    public ProductController(ProductService productService, TaxService taxService, ProductMapper productMapper) {
         this.productService = productService;
         this.taxService = taxService;
+        this.productMapper = productMapper;
     }
 
     @GetMapping("")
@@ -31,8 +36,10 @@ public class ProductController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Product> saveNewProduct(@RequestBody Product product,
+    public ResponseEntity<Product> saveNewProduct(@RequestBody ProductRequestBodyDto requestBody,
                                                   @RequestParam(required = false) Long taxId) {
+        Product product = productMapper.productRequestBodyDtoToProduct(requestBody);
+
         if (taxId != null) {
             product.setTax(taxService.getTax(taxId));
         }
@@ -40,7 +47,9 @@ public class ProductController {
             throw new MissingFieldsException("Incomplete product data");
         }
 
-        return ResponseEntity.ok().body(productService.saveNewProduct(product, taxId));
+        Product savedProduct = productService.saveNewProduct(product, taxId);
+
+        return ResponseEntity.created(URI.create("/api/product/" + savedProduct.getProductId())).body(savedProduct);
     }
 
     @PutMapping("/{id}")

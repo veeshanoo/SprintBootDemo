@@ -32,11 +32,10 @@ public class Product {
     public Product() {
     }
 
-    public Product(Long productId, String productName, Float productPrice, Tax tax) {
-        this.productId = productId;
+    public Product(String productName, Float productPrice, ProductDetails productDetails) {
         this.productName = productName;
         this.productPrice = productPrice;
-        this.tax = tax;
+        this.productDetails = productDetails;
     }
 
     public String getProductName() {
@@ -69,5 +68,9 @@ public class Product {
 
     public void setProductDetails(ProductDetails productDetails) {
         this.productDetails = productDetails;
+    }
+
+    public Long getProductId() {
+        return productId;
     }
 }

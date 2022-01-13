@@ -44,4 +44,14 @@ public class Receipt {
 
         return total;
     }
+
+    public Float calculateReceiptTax() {
+        Float tax = (float) 0;
+
+        for (ReceiptProduct receiptProduct : this.getReceiptProducts()) {
+            tax += receiptProduct.calculateTax();
+        }
+
+        return tax;
+    }
 }

@@ -2,6 +2,7 @@ package com.example.sprintbootdemo.exceptionhandler;
 
 import com.example.sprintbootdemo.exception.MissingFieldsException;
 import com.example.sprintbootdemo.exception.ResourceNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,12 +13,21 @@ import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler({ResourceNotFoundException.class, MissingFieldsException.class})
+    @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleNotFoundException(RuntimeException exception) {
         Map<String, String> responseParameters = new HashMap<>();
         responseParameters.put("Reason: ", exception.getMessage());
         responseParameters.put("Time: ", LocalDateTime.now().toString());
 
-        return ResponseEntity.badRequest().body(responseParameters);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseParameters);
+    }
+
+    @ExceptionHandler(MissingFieldsException.class)
+    public ResponseEntity<Map<String, String>> handleBadRequestException(RuntimeException exception) {
+        Map<String, String> responseParameters = new HashMap<>();
+        responseParameters.put("Reason: ", exception.getMessage());
+        responseParameters.put("Time: ", LocalDateTime.now().toString());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseParameters);
     }
 }

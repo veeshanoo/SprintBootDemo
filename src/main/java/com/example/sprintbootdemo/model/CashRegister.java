@@ -1,5 +1,8 @@
 package com.example.sprintbootdemo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -7,9 +10,11 @@ import java.util.List;
 public class CashRegister {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty
     private Long cashRegisterId;
 
     @OneToMany(mappedBy = "cashRegister")
+    @JsonIgnore
     private List<Receipt> receipts;
 
     @ManyToMany

@@ -51,13 +51,19 @@ public class ReceiptProduct {
         this.receiptProductQuantity = receiptProductQuantity;
     }
 
-    public Float calculateCost() {
-        float cost = this.getReceiptProductQuantity() * this.product.getProductPrice();
-
-        if (this.product.getTax() != null) {
-            cost = cost * this.product.getTax().getTaxPercentage();
+    public Float calculateTax() {
+        if (this.product.getTax() == null) {
+            return (float) 0.0;
         }
 
-        return cost;
+        return this.getReceiptProductQuantity() * this.product.getProductPrice() * this.product.getTax().getTaxPercentage();
+    }
+
+    public Float calculateCostWithoutTax() {
+        return this.getReceiptProductQuantity() * this.product.getProductPrice();
+    }
+
+    public Float calculateCost() {
+        return this.calculateCostWithoutTax() + this.calculateTax();
     }
 }
