@@ -1,6 +1,7 @@
 package com.example.sprintbootdemo.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,11 @@ public class Tax {
 
     public Tax(Long taxId, String taxName, Float taxPercentage) {
         this.taxId = taxId;
+        this.taxName = taxName;
+        this.taxPercentage = taxPercentage;
+    }
+
+    public Tax(String taxName, Float taxPercentage) {
         this.taxName = taxName;
         this.taxPercentage = taxPercentage;
     }

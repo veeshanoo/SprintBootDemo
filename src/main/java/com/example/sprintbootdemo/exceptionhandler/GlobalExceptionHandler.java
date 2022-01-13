@@ -3,6 +3,7 @@ package com.example.sprintbootdemo.exceptionhandler;
 import com.example.sprintbootdemo.exception.MissingFieldsException;
 import com.example.sprintbootdemo.exception.NoProductOnCashRegisterException;
 import com.example.sprintbootdemo.exception.ResourceNotFoundException;
+import com.example.sprintbootdemo.exception.SameNameException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -32,7 +33,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseParameters);
     }
 
-    @ExceptionHandler(NoProductOnCashRegisterException.class)
+    @ExceptionHandler({NoProductOnCashRegisterException.class, SameNameException.class})
     public ResponseEntity<Map<String, String>> handleNoProductOnCashRegister(RuntimeException exception) {
         Map<String, String> responseParameters = new HashMap<>();
         responseParameters.put("Reason: ", exception.getMessage());

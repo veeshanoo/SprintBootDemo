@@ -1,11 +1,14 @@
 package com.example.sprintbootdemo.controller;
 
+import com.example.sprintbootdemo.dto.TaxRequestBodyDto;
+import com.example.sprintbootdemo.mapper.TaxMapper;
 import com.example.sprintbootdemo.model.Tax;
 import com.example.sprintbootdemo.service.TaxService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -13,9 +16,11 @@ import java.util.List;
 @Validated
 public class TaxController {
     private final TaxService taxService;
+    private final TaxMapper taxMapper;
 
-    public TaxController(TaxService taxService) {
+    public TaxController(TaxService taxService, TaxMapper taxMapper) {
         this.taxService = taxService;
+        this.taxMapper = taxMapper;
     }
 
     @GetMapping("")
@@ -29,7 +34,7 @@ public class TaxController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Tax> saveNewTax(@RequestBody Tax tax) {
-        return ResponseEntity.ok().body(taxService.saveNewTax(tax));
+    public ResponseEntity<Tax> saveNewTax(@Valid @RequestBody TaxRequestBodyDto requestBodyDto) {
+        return ResponseEntity.ok().body(taxService.saveNewTax(taxMapper.TaxRequestBodyDtoToTax(requestBodyDto)));
     }
 }

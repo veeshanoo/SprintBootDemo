@@ -1,6 +1,7 @@
 package com.example.sprintbootdemo.service;
 
 import com.example.sprintbootdemo.exception.ResourceNotFoundException;
+import com.example.sprintbootdemo.exception.SameNameException;
 import com.example.sprintbootdemo.model.Tax;
 import com.example.sprintbootdemo.repository.TaxRepository;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,9 @@ public class TaxService {
     }
 
     public Tax saveNewTax(Tax tax) {
+        if ((long) taxRepository.findByTaxName(tax.getTaxName()).size() > 0) {
+            throw new SameNameException("Tax with name: " + tax.getTaxName() + " already exists");
+        }
         return taxRepository.save(tax);
     }
 }
