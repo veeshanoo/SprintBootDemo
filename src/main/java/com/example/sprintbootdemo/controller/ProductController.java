@@ -61,8 +61,6 @@ public class ProductController {
         }
 
         if (taxId != null) {
-            System.out.println(taxId);
-            System.out.println(taxService.getTax(taxId).toString());
             product.setTax(taxService.getTax(taxId));
         }
 

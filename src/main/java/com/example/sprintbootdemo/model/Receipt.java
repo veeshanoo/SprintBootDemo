@@ -23,6 +23,14 @@ public class Receipt {
         this.cashRegister = cashRegister;
     }
 
+    public Long getReceiptId() {
+        return receiptId;
+    }
+
+    public void setReceiptProducts(List<ReceiptProduct> receiptProducts) {
+        this.receiptProducts = receiptProducts;
+    }
+
     public CashRegister getCashRegister() {
         return cashRegister;
     }

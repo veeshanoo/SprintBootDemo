@@ -39,6 +39,10 @@ public class ReceiptProduct {
         return receiptProductQuantity;
     }
 
+    public Long getReceiptProductId() {
+        return receiptProductId;
+    }
+
     public void setReceipt(Receipt receipt) {
         this.receipt = receipt;
     }

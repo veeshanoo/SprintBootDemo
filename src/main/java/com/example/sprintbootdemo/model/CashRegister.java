@@ -28,7 +28,27 @@ public class CashRegister {
     public CashRegister() {
     }
 
+    public Long getCashRegisterId() {
+        return cashRegisterId;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
     public List<Receipt> getReceipts() {
         return receipts;
+    }
+
+    public void setCashRegisterId(Long cashRegisterId) {
+        this.cashRegisterId = cashRegisterId;
+    }
+
+    public void setReceipts(List<Receipt> receipts) {
+        this.receipts = receipts;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }

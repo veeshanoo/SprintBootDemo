@@ -1,5 +1,8 @@
 package com.example.sprintbootdemo.controller;
 
+import com.example.sprintbootdemo.dto.ReceiptProductResponseBodyDto;
+import com.example.sprintbootdemo.dto.ReceiptResponseBodyDto;
+import com.example.sprintbootdemo.mapper.ReceiptMapper;
 import com.example.sprintbootdemo.model.CashRegister;
 import com.example.sprintbootdemo.model.Receipt;
 import com.example.sprintbootdemo.service.CashRegisterService;
@@ -15,15 +18,17 @@ import org.springframework.web.bind.annotation.*;
 public class ReceiptController {
     private final ReceiptService receiptService;
     private final CashRegisterService cashRegisterService;
+    private final ReceiptMapper receiptMapper;
 
-    public ReceiptController(ReceiptService receiptService, CashRegisterService cashRegisterService) {
+    public ReceiptController(ReceiptService receiptService, CashRegisterService cashRegisterService, ReceiptMapper receiptMapper) {
         this.receiptService = receiptService;
         this.cashRegisterService = cashRegisterService;
+        this.receiptMapper = receiptMapper;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Receipt> getReceipt(@PathVariable Long id) {
-        return ResponseEntity.ok().body(receiptService.getReceipt(id));
+    public ResponseEntity<ReceiptResponseBodyDto> getReceipt(@PathVariable Long id) {
+        return ResponseEntity.ok().body(receiptMapper.ReceiptToReceiptResponseBodyDto(receiptService.getReceipt(id)));
     }
 
     @GetMapping("/{id}/total")
@@ -42,7 +47,9 @@ public class ReceiptController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Receipt> createNewReceipt(@RequestParam(required = true) Long cashRegisterId) {
-        return ResponseEntity.ok().body(cashRegisterService.createNewReceipt(cashRegisterId, new Receipt()));
+    public ResponseEntity<ReceiptResponseBodyDto> createNewReceipt(@RequestParam(required = true) Long cashRegisterId) {
+        return ResponseEntity.ok().body(receiptMapper.ReceiptToReceiptResponseBodyDto(
+                cashRegisterService.createNewReceipt(cashRegisterId, new Receipt())
+        ));
     }
 }
