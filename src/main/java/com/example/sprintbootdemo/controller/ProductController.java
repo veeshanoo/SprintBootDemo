@@ -4,9 +4,13 @@ import com.example.sprintbootdemo.dto.ProductRequestBodyDto;
 import com.example.sprintbootdemo.exception.MissingFieldsException;
 import com.example.sprintbootdemo.mapper.ProductMapper;
 import com.example.sprintbootdemo.model.Product;
+import com.example.sprintbootdemo.model.Tax;
 import com.example.sprintbootdemo.service.ProductService;
 import com.example.sprintbootdemo.service.TaxService;
+import io.swagger.annotations.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -14,6 +18,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/product")
+@Validated
+@Api(description = "Exposes product operations", tags = "Product")
 public class ProductController {
     private final ProductService productService;
     private final TaxService taxService;
@@ -26,18 +32,40 @@ public class ProductController {
     }
 
     @GetMapping("")
+    @ApiOperation(value = "Gets all products")
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Internal server error"),
+            @ApiResponse(code = 200, message = "Successful operation"),
+            @ApiResponse(code = 400, message = "Invalid request"),
+            @ApiResponse(code = 404, message = "Specified resource does not exist")
+    })
     public ResponseEntity<List<Product>> getAllProducts() {
         return ResponseEntity.ok().body(productService.getAllProducts());
     }
 
     @GetMapping("/{id}")
+    @ApiOperation(value = "Gets product with ID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Internal server error"),
+            @ApiResponse(code = 200, message = "Successful operation"),
+            @ApiResponse(code = 400, message = "Invalid request"),
+            @ApiResponse(code = 404, message = "Specified resource does not exist")
+    })
     public ResponseEntity<Product> getProduct(@PathVariable Long id) {
         return ResponseEntity.ok().body(productService.getProduct(id));
     }
 
     @PostMapping("")
+    @ApiOperation(value = "Creates new product")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Internal server error"),
+            @ApiResponse(code = 201, message = "Successful creation", response = Tax.class),
+            @ApiResponse(code = 400, message = "Invalid request"),
+            @ApiResponse(code = 404, message = "Specified resource does not exist")
+    })
     public ResponseEntity<Product> saveNewProduct(@RequestBody ProductRequestBodyDto requestBody,
-                                                  @RequestParam(required = false) Long taxId) {
+                                                  @ApiParam(value = "Tax group", required = false) @RequestParam(required = false) Long taxId) {
         Product product = productMapper.productRequestBodyDtoToProduct(requestBody);
 
         if (taxId != null) {
@@ -53,9 +81,16 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
+    @ApiOperation(value = "Updates product with ID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Internal server error"),
+            @ApiResponse(code = 200, message = "Successful operation"),
+            @ApiResponse(code = 400, message = "Invalid request"),
+            @ApiResponse(code = 404, message = "Specified resource does not exist")
+    })
     public ResponseEntity<Product> updateProduct(@RequestBody(required = false) Product product,
                                                  @PathVariable Long id,
-                                                 @RequestParam(required = false) Long taxId) {
+                                                 @ApiParam(value = "Tax group", required = false) @RequestParam(required = false) Long taxId) {
         if (product == null) {
             product = productService.getProduct(id);
         }
@@ -68,6 +103,13 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "Deletes product with ID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Internal server error"),
+            @ApiResponse(code = 200, message = "Successful operation"),
+            @ApiResponse(code = 400, message = "Invalid request"),
+            @ApiResponse(code = 404, message = "Specified resource does not exist")
+    })
     public void deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
     }
