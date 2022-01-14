@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -35,6 +36,7 @@ public class TaxController {
 
     @PostMapping("")
     public ResponseEntity<Tax> saveNewTax(@Valid @RequestBody TaxRequestBodyDto requestBodyDto) {
-        return ResponseEntity.ok().body(taxService.saveNewTax(taxMapper.TaxRequestBodyDtoToTax(requestBodyDto)));
+        Tax tax = taxService.saveNewTax(taxMapper.TaxRequestBodyDtoToTax(requestBodyDto));
+        return ResponseEntity.created(URI.create("/api/tax/" + tax.getTaxId())).body(tax);
     }
 }

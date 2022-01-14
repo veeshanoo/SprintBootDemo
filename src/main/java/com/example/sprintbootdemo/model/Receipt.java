@@ -43,6 +43,10 @@ public class Receipt {
         return receiptProducts;
     }
 
+    public void setReceiptId(Long receiptId) {
+        this.receiptId = receiptId;
+    }
+
     public Float calculateReceiptTotal() {
         Float total = (float) 0;
 

@@ -7,9 +7,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class TaxRequestBodyDto {
-    @NotNull(message = "taxName field is mandatory")
+    @NotNull()
     private String taxName;
-    @NotNull(message = "taxPercentage field is mandatory")
+    @NotNull()
     @Range(min = 0, max = 1)
     private Float taxPercentage;
 

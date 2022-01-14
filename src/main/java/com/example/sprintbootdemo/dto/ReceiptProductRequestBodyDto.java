@@ -1,13 +1,13 @@
 package com.example.sprintbootdemo.dto;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class ReceiptProductRequestBodyDto {
-    @NotBlank
+    @NotNull
     private Float receiptProductQuantity;
-    @NotBlank
+    @NotNull
     private Long receiptId;
-    @NotBlank
+    @NotNull
     private Long productId;
 
     public ReceiptProductRequestBodyDto(Float receiptProductQuantity, Long receiptId, Long productId) {

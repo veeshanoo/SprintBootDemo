@@ -2,18 +2,17 @@ package com.example.sprintbootdemo.dto;
 
 
 import com.example.sprintbootdemo.model.ProductDetails;
-import com.sun.istack.NotNull;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 public class ProductRequestBodyDto {
-    @NotBlank
+    @NotNull
     private String productName;
-    @NotBlank
+    @NotNull
     @Positive
     private Float productPrice;
-    @NotBlank
+    @NotNull
     private ProductDetails productDetails;
 
     public ProductRequestBodyDto(String productName, Float productPrice, ProductDetails productDetails) {
