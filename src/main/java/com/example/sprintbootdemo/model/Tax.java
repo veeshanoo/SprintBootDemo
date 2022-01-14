@@ -1,11 +1,14 @@
 package com.example.sprintbootdemo.model;
 
+import io.swagger.annotations.ApiModel;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@ApiModel(description = "Tax group data")
 public class Tax {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

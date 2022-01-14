@@ -1,11 +1,13 @@
 package com.example.sprintbootdemo.dto;
 
+import io.swagger.annotations.ApiModel;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+@ApiModel(description = "Tax to be created data")
 public class TaxRequestBodyDto {
     @NotNull()
     private String taxName;

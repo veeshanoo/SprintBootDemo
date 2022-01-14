@@ -2,6 +2,7 @@ package com.example.sprintbootdemo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModel;
 
 import javax.persistence.*;
 import java.util.List;

@@ -1,11 +1,13 @@
 package com.example.sprintbootdemo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModel;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@ApiModel(description = "Product data")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

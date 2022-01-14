@@ -1,7 +1,10 @@
 package com.example.sprintbootdemo.dto;
 
+import io.swagger.annotations.ApiModel;
+
 import javax.validation.constraints.NotNull;
 
+@ApiModel(description = "Product to be added on receipt")
 public class ReceiptProductRequestBodyDto {
     @NotNull
     private Float receiptProductQuantity;

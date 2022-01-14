@@ -1,5 +1,8 @@
 package com.example.sprintbootdemo.dto;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel(description = "Receipt product data")
 public class ReceiptProductResponseBodyDto {
     private Long receiptProductId;
     private Long receiptId;

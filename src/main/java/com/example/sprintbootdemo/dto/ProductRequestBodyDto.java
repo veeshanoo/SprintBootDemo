@@ -2,10 +2,12 @@ package com.example.sprintbootdemo.dto;
 
 
 import com.example.sprintbootdemo.model.ProductDetails;
+import io.swagger.annotations.ApiModel;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+@ApiModel(description = "Product to be created")
 public class ProductRequestBodyDto {
     @NotNull
     private String productName;

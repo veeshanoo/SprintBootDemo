@@ -2,10 +2,12 @@ package com.example.sprintbootdemo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModel;
 
 import javax.persistence.*;
 
 @Entity
+@ApiModel(description = "Product details data")
 public class ProductDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
