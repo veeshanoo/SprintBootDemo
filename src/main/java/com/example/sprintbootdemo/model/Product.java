@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -14,7 +15,9 @@ public class Product {
     @JsonProperty
     private Long productId;
 
+    @NotNull
     private String productName;
+    @NotNull
     private Float productPrice;
 
     @ManyToOne

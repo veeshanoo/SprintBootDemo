@@ -12,7 +12,9 @@ import java.util.List;
 public class Tax {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
     private Long taxId;
+    @NotNull
     private String taxName;
     private Float taxPercentage; // (0, 1) range
     @OneToMany(mappedBy = "tax")

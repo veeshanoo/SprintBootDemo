@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -64,7 +65,7 @@ public class ProductController {
             @ApiResponse(code = 400, message = "Invalid request"),
             @ApiResponse(code = 404, message = "Specified resource does not exist")
     })
-    public ResponseEntity<Product> saveNewProduct(@RequestBody ProductRequestBodyDto requestBody,
+    public ResponseEntity<Product> saveNewProduct(@Valid @RequestBody ProductRequestBodyDto requestBody,
                                                   @ApiParam(value = "Tax group", required = false) @RequestParam(required = false) Long taxId) {
         Product product = productMapper.productRequestBodyDtoToProduct(requestBody);
 
