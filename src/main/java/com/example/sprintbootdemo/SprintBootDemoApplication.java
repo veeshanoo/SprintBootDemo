@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.core.env.Environment;
+
+import java.util.Arrays;
 
 @SpringBootApplication
 public class SprintBootDemoApplication implements CommandLineRunner {
@@ -21,8 +24,14 @@ public class SprintBootDemoApplication implements CommandLineRunner {
         SpringApplication.run(SprintBootDemoApplication.class, args);
     }
 
+    @Autowired
+    private Environment environment;
+
     @Override
     public void run(String... args) throws Exception {
+        System.out.println("Active profiles: " +
+                Arrays.toString(environment.getActiveProfiles()));
+
         Tax taxA = new Tax(1L, "TaxA", (float) 0.24);
         Tax taxB = new Tax(2L, "TaxB", (float) 0.20);
         taxService.saveNewTax(taxA);

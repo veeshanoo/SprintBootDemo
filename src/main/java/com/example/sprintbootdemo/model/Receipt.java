@@ -62,4 +62,8 @@ public class Receipt {
 
         return tax;
     }
+
+    public void setReceiptId(Long receiptId) {
+        this.receiptId = receiptId;
+    }
 }
