@@ -16,7 +16,7 @@ import java.time.Instant;
 @Component
 public class LogAspect {
 
-    @Around("execution(* com.awbd.school..*.*(..))")
+    @Around("execution(* com.example.sprintbootdemo..*.*(..))")
     public Object log(ProceedingJoinPoint joinPoint) throws Throwable {
         log.info(joinPoint.getSignature().toString() + " method execution start");
         Instant start = Instant.now();
@@ -28,7 +28,7 @@ public class LogAspect {
         return returnObj;
     }
 
-    @AfterThrowing(value = "execution(* com.awbd.school.*.*(..))",throwing = "ex")
+    @AfterThrowing(value = "execution(* com.example.sprintbootdemo..*.*(..))",throwing = "ex")
     public void logException(JoinPoint joinPoint, Exception ex) {
         log.error(joinPoint.getSignature()+ " An exception happened due to : "+ex.getMessage());
     }

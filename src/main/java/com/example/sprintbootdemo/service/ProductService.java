@@ -3,11 +3,20 @@ package com.example.sprintbootdemo.service;
 import com.example.sprintbootdemo.exception.ResourceNotFoundException;
 import com.example.sprintbootdemo.model.Product;
 import com.example.sprintbootdemo.repository.ProductRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.xml.bind.SchemaOutputResolver;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 
+
+@Slf4j
 @Service
 public class ProductService {
     private final ProductRepository productRepository;
@@ -16,8 +25,25 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+//    public List<Product> getAllProducts() {
+//        return productRepository.findAll().;
+//    }
+
+    public Page<Product> getAllProducts(Long pageNr, String field, Boolean order) {
+        int pageSize = 2;
+        Set<String> allowedFields = new HashSet<>() {{
+           add("productName");
+           add("productPrice");
+        }};
+
+        if (!allowedFields.contains(field)) {
+            field = "productName";
+        }
+
+        Pageable params = PageRequest.of(pageNr.intValue() - 1, pageSize,
+                order ? Sort.by(field).ascending() : Sort.by(field).descending());
+
+        return productRepository.findAll(params);
     }
 
     public Product getProduct(Long productId) {

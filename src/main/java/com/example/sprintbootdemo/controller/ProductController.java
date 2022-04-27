@@ -6,12 +6,15 @@ import com.example.sprintbootdemo.mapper.ProductMapper;
 import com.example.sprintbootdemo.model.Product;
 import com.example.sprintbootdemo.service.ProductService;
 import com.example.sprintbootdemo.service.TaxService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/product")
 public class ProductController {
@@ -26,8 +29,19 @@ public class ProductController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Product>> getAllProducts() {
-        return ResponseEntity.ok().body(productService.getAllProducts());
+    public ResponseEntity<List<Product>> getAllProducts(@RequestParam(required = false) Long pageNr,
+                                                        @RequestParam(required = false) String field,
+                                                        @RequestParam(required = false) Boolean asc) {
+        if (pageNr == null) {
+            pageNr = 1L;
+        }
+        if (asc == null) {
+            asc = true;
+        }
+        if (field == null) {
+            field = "productName";
+        }
+        return ResponseEntity.ok().body(productService.getAllProducts(pageNr, field, asc).getContent());
     }
 
     @GetMapping("/{id}")

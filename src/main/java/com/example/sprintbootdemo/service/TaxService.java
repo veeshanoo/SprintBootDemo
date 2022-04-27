@@ -4,6 +4,7 @@ import com.example.sprintbootdemo.exception.ResourceNotFoundException;
 import com.example.sprintbootdemo.exception.SameNameException;
 import com.example.sprintbootdemo.model.Tax;
 import com.example.sprintbootdemo.repository.TaxRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -4,13 +4,16 @@ import com.example.sprintbootdemo.dto.TaxRequestBodyDto;
 import com.example.sprintbootdemo.mapper.TaxMapper;
 import com.example.sprintbootdemo.model.Tax;
 import com.example.sprintbootdemo.service.TaxService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/tax")
 @Validated
@@ -35,6 +38,7 @@ public class TaxController {
 
     @PostMapping("")
     public ResponseEntity<Tax> saveNewTax(@Valid @RequestBody TaxRequestBodyDto requestBodyDto) {
-        return ResponseEntity.ok().body(taxService.saveNewTax(taxMapper.TaxRequestBodyDtoToTax(requestBodyDto)));
+        Tax tax = taxService.saveNewTax(taxMapper.TaxRequestBodyDtoToTax(requestBodyDto));
+        return ResponseEntity.created(URI.create("/api/tax/" + tax.getTaxId())).body(tax);
     }
 }
